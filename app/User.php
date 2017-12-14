@@ -2,28 +2,32 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use Notifiable;
+    protected $fillable = ['name', 'password'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    public function send_message($message, $receiver_id)
+    {
+        $message = new Message;
+        $message->body = $message;
+        $message->save();
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function received_messages()
+    {
+        return $this->hasMany('App\Message', 'receiver_id');
+    }
+
+    public function sent_messages()
+    {
+        return $this->hasMany('App\Message', 'sender_id');
+    }
+
+    public function getMessages($direction = 'received')
+    {
+        if('sent' == $direction) return $this->sent_messages;
+        return $this->received_messages;
+    }
 }
