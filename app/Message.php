@@ -12,25 +12,25 @@ class Message extends Model
 
     // Set up the relationship between a message and its sender user
 
-    public function sender(){
-
+    public function sender()
+    {
         return $this->belongsTo('User', 'sender_id');
     }
 
     // Set up the relationship between a message and its receiver user
 
-    public function receiver(){
-
+    public function receiver()
+    {
         return $this->belongsTo('User', 'receiver_id');
     }
 
-    public function getCreatedAtAttribute($createdAt) {
-
+    public function getCreatedAtAttribute($createdAt)
+    {
         return Carbon::parse($createdAt)->diffForHumans();
     }
 
-    public function getUpdatedAtAttribute($createdAt) {
-
+    public function getUpdatedAtAttribute($createdAt)
+    {
         return Carbon::parse($createdAt)->diffForHumans();
     }
 }

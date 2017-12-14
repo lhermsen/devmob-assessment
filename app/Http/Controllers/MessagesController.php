@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+
 use App\Message;
 
 class MessagesController extends Controller
 {
     public function list()
     {
-        $user = User::where(['id'=> 1, 'password' => 'ABasdC'])->first();
-        return $user->getMessages('received');
+        return Message::all();
     }
 
     public function show(Message $message)
